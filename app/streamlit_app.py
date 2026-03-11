@@ -1,5 +1,5 @@
 """
-streamlit_app.py — Minimalist Premium Used Car Price Prediction UI
+streamlit_app.py —  Used Car Price Prediction UI
 ==================================================================
 Launch: streamlit run app/streamlit_app.py
 """
