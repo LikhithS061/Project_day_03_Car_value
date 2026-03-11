@@ -25,14 +25,12 @@ def load_data(path: str) -> pd.DataFrame:
 
 def clean_data(df: pd.DataFrame) -> pd.DataFrame:
     """Handle missing values and basic cleaning."""
-    # Drop duplicate rows
     before = len(df)
     df = df.drop_duplicates()
     after = len(df)
     if before != after:
         print(f"[Preprocess] Dropped {before - after} duplicate rows")
 
-    # Drop rows with any missing values (dataset is small, can't afford imputation noise)
     before = len(df)
     df = df.dropna()
     after = len(df)
@@ -52,10 +50,8 @@ def engineer_features(df: pd.DataFrame) -> pd.DataFrame:
     current_year = datetime.now().year
     df = df.copy()
 
-    # Create CarAge feature
     df["CarAge"] = current_year - df["Year"]
 
-    # Drop columns that won't be used as features
     cols_to_drop = ["Car_Name", "Year"]
     df = df.drop(columns=[c for c in cols_to_drop if c in df.columns])
 
@@ -79,21 +75,16 @@ def preprocess(df: pd.DataFrame):
     Full preprocessing pipeline.
     Returns: X (features), y (target), feature_names
     """
-    # Step 1: Clean
     df = clean_data(df)
 
-    # Step 2: Feature engineering
     df = engineer_features(df)
 
-    # Step 3: Encode categoricals
     df = encode_categoricals(df)
 
-    # Step 4: Separate features and target
     target_col = "Selling_Price"
     y = df[target_col]
     X = df.drop(columns=[target_col])
 
-    # Ensure all columns are numeric
     X = X.apply(pd.to_numeric, errors="coerce").fillna(0)
 
     feature_names = list(X.columns)

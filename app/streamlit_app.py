@@ -7,24 +7,17 @@ Launch: streamlit run app/streamlit_app.py
 import sys
 import os
 
-# Add project root to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 import streamlit as st
 from src.predict import predict_price, load_model
 
-# ──────────────────────────────────────────────────────────
-# Page Config
-# ──────────────────────────────────────────────────────────
 st.set_page_config(
     page_title="CarValue",
     layout="centered",
     initial_sidebar_state="collapsed",
 )
 
-# ──────────────────────────────────────────────────────────
-# Minimalist CSS
-# ──────────────────────────────────────────────────────────
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
@@ -37,7 +30,6 @@ st.markdown("""
     }
 
     /* Hide default Streamlit elements */
-    #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     header {visibility: hidden;}
 
@@ -253,9 +245,6 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-# ──────────────────────────────────────────────────────────
-# Header
-# ──────────────────────────────────────────────────────────
 st.markdown("""
 <div class="main-title">
     <h1>CarValue</h1>
@@ -264,9 +253,6 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-# ──────────────────────────────────────────────────────────
-# Check if model exists
-# ──────────────────────────────────────────────────────────
 model_path = os.path.join(os.path.dirname(__file__), "..", "models", "car_price_model.pkl")
 if not os.path.exists(model_path):
     st.error("Model not found. Please run the training script.")
@@ -276,17 +262,10 @@ artifact = load_model(model_path)
 metrics = artifact.get("metrics", {})
 
 
-# ──────────────────────────────────────────────────────────
-# Application Tabs
-# ──────────────────────────────────────────────────────────
 tab1, tab2 = st.tabs(["Valuation Estimator", "Model Evaluation Metrics"])
 
 with tab1:
-    # ──────────────────────────────────────────────────────────
-    # Input Form
-    # ──────────────────────────────────────────────────────────
 
-    # 1. Primary Anchor Section
     with st.container(border=True):
         st.markdown('<div class="section-label">Market Anchor</div>', unsafe_allow_html=True)
 
@@ -300,7 +279,6 @@ with tab1:
             step=0.5,
         )
 
-    # 2. Vehicle Details Section
     with st.container(border=True):
         st.markdown('<div class="section-label">Specification & Usage</div>', unsafe_allow_html=True)
 
@@ -345,9 +323,6 @@ with tab1:
             )
 
 
-    # ──────────────────────────────────────────────────────────
-    # Prediction
-    # ──────────────────────────────────────────────────────────
     if st.button("Calculate Valuation", use_container_width=True):
         with st.spinner("Executing inference model..."):
             try:
@@ -371,7 +346,6 @@ with tab1:
                 </div>
                 """, unsafe_allow_html=True)
 
-                # Depreciation insight
                 if present_price > 0:
                     retention = (predicted / present_price) * 100
                     depreciation = 100 - retention
@@ -385,9 +359,6 @@ with tab1:
 
 
 with tab2:
-    # ──────────────────────────────────────────────────────────
-    # Model Metrics Display
-    # ──────────────────────────────────────────────────────────
     with st.container(border=True):
         st.markdown('<div class="section-label">Winning Model Metrics (' + artifact.get("model_name", "Best Model") + ')</div>', unsafe_allow_html=True)
         
@@ -413,15 +384,11 @@ with tab2:
                 metrics.get("test_mae", 0),
             ), unsafe_allow_html=True)
     
-    # ──────────────────────────────────────────────────────────
-    # Comparative Matrix
-    # ──────────────────────────────────────────────────────────
     all_results = artifact.get("all_results", {})
     if all_results:
         import pandas as pd
         st.markdown('<div class="section-label">Algorithm Comparison Matrix</div>', unsafe_allow_html=True)
         
-        # Build dataframe
         results_list = []
         for model_name, res in all_results.items():
             results_list.append({
@@ -434,7 +401,6 @@ with tab2:
             
         df_comp = pd.DataFrame(results_list)
         
-        # Style dataframe for the dark theme
         st.dataframe(
             df_comp, 
             hide_index=True, 
@@ -448,7 +414,4 @@ with tab2:
         """, unsafe_allow_html=True)
 
 
-# ──────────────────────────────────────────────────────────
-# Footer (Removed)
-# ──────────────────────────────────────────────────────────
 
