@@ -7,7 +7,7 @@ Steps:
   1. Load raw CSV data
   2. Handle missing values
   3. Feature engineering (CarAge, drop Car_Name)
-  4. Encode categorical variables (one-hot)
+  4. Encode categorical variables (one-hot encoding)
   5. Split into features (X) and target (y)
 """
 
