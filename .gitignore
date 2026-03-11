@@ -23,3 +23,4 @@ wheels/
 .env
 .DS_Store
 .vscode/
+init/
