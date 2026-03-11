@@ -2,14 +2,14 @@
 
 A professional, end-to-end Machine Learning web application designed to predict the resale valuation of used cars. Utilizing advanced regression algorithms and an elegant, minimalist user interface, this tool accurately estimates vehicle depreciation based on critical market anchors and physical specifications.
 
-## 🚀 Features
+##  Features
 
 - **Algorithm Comparison Matrix**: Integrates `RandomForest`, `GradientBoosting`, and `XGBoost` regression pipelines to systematically benchmark the highest performing model via `RandomizedSearchCV` hyperparameter tuning.
 - **Data-Driven Architecture**: Achieves up to ~93% validation R² scores through rigorous 5-Fold Cross Validation.
 - **Premium User Interface**: Built with an elegant, monochromatic frontend (via Streamlit) optimized for an intuitive user experience.
 - **Market Anchor Logic**: Emphasizes actual ex-showroom listing prices to accurately compute value retention and depreciation metrics.
 
-## ⚙️ Project Structure
+##  Project Structure
 
 ```bash
 .
@@ -28,7 +28,7 @@ A professional, end-to-end Machine Learning web application designed to predict 
 └── README.md
 ```
 
-## 🛠️ Installation & Setup
+##  Installation & Setup
 
 1. **Clone the repository:**
 
@@ -62,7 +62,7 @@ A professional, end-to-end Machine Learning web application designed to predict 
    streamlit run app/streamlit_app.py
    ```
 
-## 📊 Technical Flow
+##  Technical Flow
 
 - **Data Preprocessing Phase**: Drops legacy string columns and extracts raw engineering parameters. Implements One-Hot encoding for categorical data (Fuel Type, Seller Type, Transmission) using `pandas.get_dummies(drop_first=True)` to avoid multicollinearity.
 - **Benchmark & Hyperparameter Tuning Phase**: Operates exhaustive randomized grid searches to optimize algorithm hyperparameters (`n_estimators`, `max_depth`, `learning_rate`, `min_samples_leaf`). Saves the leading mathematical model + features into an artifact.
